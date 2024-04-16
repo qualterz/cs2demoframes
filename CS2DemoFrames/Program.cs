@@ -16,7 +16,7 @@ if (!File.Exists(demoPath))
     Environment.Exit(1);
 }
 
-var stream = File.OpenRead(args[0]);
+var stream = File.OpenRead(demoPath);
 var reader = new BinaryReader(stream);
 
 // Skipping filestamp and unknown bytes 
