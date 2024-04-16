@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 namespace CS2DemoFrames.Extensions;
 
 public static class ReaderExtensions
@@ -30,8 +28,8 @@ public static class ReaderExtensions
         var frame = new Frame(
             Command: new(
                 Value: commandValue,
-                IsCompressed: (commandValue & 64) == 64,
-                Message: commandValue & -65),
+                IsCompressed: (commandValue & Command.CompressedMask) == Command.CompressedMask,
+                Message: commandValue & Command.MessageMask),
             Tick: reader.ReadVarInt(),
             Size: reader.ReadVarInt());
 
