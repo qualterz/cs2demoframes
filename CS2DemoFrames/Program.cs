@@ -1,4 +1,6 @@
-﻿using CS2DemoFrames.Extensions;
+﻿using System.Text.Json;
+using CS2DemoFrames;
+using CS2DemoFrames.Extensions;
 
 var demoPathArg = args.FirstOrDefault();
 
@@ -23,10 +25,17 @@ var reader = new BinaryReader(stream);
 reader.ReadBytes(8);
 reader.ReadBytes(8);
 
-var framesWithIndex = reader.ReadAllFrames()
-    .Select((frame, index) => (frame, index));
+long offset = stream.Position;
 
-foreach (var (frame, index) in framesWithIndex)
+var serializerOptions = new JsonSerializerOptions(JsonSerializerDefaults.Web);
+
+foreach (var frame in reader.ReadAllFrames())
 {
-    Console.WriteLine($"{index} - {frame}");
+    Result result = new(offset, frame);
+
+    Console.Out.WriteLine(JsonSerializer.Serialize(result, serializerOptions));
+
+    offset = stream.Position;
 }
+
+record Result(long Offset, Frame Frame);
