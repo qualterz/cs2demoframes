@@ -23,13 +23,10 @@ public static class ReaderExtensions
 
     public static Frame ReadFrame(this BinaryReader reader)
     {
-        var commandValue = reader.ReadVarInt();
+        var value = reader.ReadVarInt();
 
         var frame = new Frame(
-            Command: new(
-                Value: commandValue,
-                IsCompressed: (commandValue & Command.CompressedMask) == Command.CompressedMask,
-                Message: commandValue & Command.MessageMask),
+            Command: new(value),
             Tick: reader.ReadVarInt(),
             Size: reader.ReadVarInt());
 

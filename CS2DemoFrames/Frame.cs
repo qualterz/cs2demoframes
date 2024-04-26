@@ -1,7 +1,10 @@
 namespace CS2DemoFrames;
 
-public record struct Command(int Message, int Value, bool IsCompressed)
+public record struct Command(int Value)
 {
+    public readonly int Message => Value & MessageMask;
+    public readonly bool IsCompressed => (Value & CompressedMask) == CompressedMask;
+
     public const byte CompressedMask = 0x40;
     public const sbyte MessageMask = -(CompressedMask + 1);
 }
