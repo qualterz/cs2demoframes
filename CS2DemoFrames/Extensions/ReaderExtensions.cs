@@ -10,7 +10,7 @@ public static class ReaderExtensions
         {
             var b = reader.ReadByte();
 
-            result |= (b & VarInt.LeastSignificalBitsMask) << (VarInt.LeastSignificalBitsCount * i);
+            result |= (b & VarInt.LeastSignificantBitsMask) << (VarInt.LeastSignificantBitsCount * i);
 
             if ((b & VarInt.MostSignificantBitMask) == 0)
             {
